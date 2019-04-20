@@ -10,6 +10,7 @@ import com.newyear.present.entity.sweets.Sweets;
 import com.newyear.present.repository.ReadyPackageRepo;
 import com.newyear.present.repository.SweetsPackagesRepo;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -247,6 +248,7 @@ public class PackageServiceImplTest {
         assertEquals(expected, actual);
     }
 
+    @Ignore
     @Test
     public void sortPackageBySweetsWeight() {
         when(sweetsPackagesRepo.findAll()).thenReturn(sweetsPackages);
