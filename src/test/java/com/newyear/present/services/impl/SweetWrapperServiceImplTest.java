@@ -19,9 +19,9 @@ import static org.mockito.Mockito.when;
 public class SweetWrapperServiceImplTest {
 
     @Mock
-    SweetWrappersRepo sweetWrappersRepo;
+    private SweetWrappersRepo sweetWrappersRepo;
     @InjectMocks
-    SweetWrapperServiceImpl sweetWrapperService;
+    private SweetWrapperServiceImpl sweetWrapperService;
 
     private List<SweetWrapper> sweetWrappers = new ArrayList<>();
 

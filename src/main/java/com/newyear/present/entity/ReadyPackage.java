@@ -35,21 +35,15 @@ public class ReadyPackage {
     @OneToMany(mappedBy = "readyPackageByPackageId")
     private Collection<SweetsPackages> sweetsPackagesById;
 
-    /*@Override
-    public String toString() {
-        return "\nPackage-" + id +
-                ", createdBy='" + createdBy + '\'' +
-                "\n" + sweetsPackagesById;
-    }*/
 
     @Override
     public String toString() {
         return
                 "\n----------------------------------------------------------------------------------------" +
-                "\nPackage id-" + id +
-                " date:" + date +
-                " createdBy:'" + createdBy + '\'' +
-                "\nsweetsById:" + sweetsPackagesById+
+                        "\nPackage id-" + id +
+                        " date:" + date +
+                        " createdBy:'" + createdBy + '\'' +
+                        "\nsweetsById:" + sweetsPackagesById +
                         "\n----------------------------------------------------------------------------------------";
 
     }

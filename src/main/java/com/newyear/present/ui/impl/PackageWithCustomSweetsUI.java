@@ -1,9 +1,9 @@
 package com.newyear.present.ui.impl;
 
 
-import com.newyear.present.entity.sweets.ConsumerSweet;
 import com.newyear.present.entity.ReadyPackage;
 import com.newyear.present.entity.SweetsPackages;
+import com.newyear.present.entity.sweets.ConsumerSweet;
 import com.newyear.present.services.*;
 import com.newyear.present.ui.ConsoleUI;
 import com.newyear.present.ui.PackageCreator;
@@ -69,7 +69,7 @@ public class PackageWithCustomSweetsUI extends ConsoleUI implements PackageCreat
 
         for (int i = 1; i <= sweetsQuantity; i++) {
 
-            ConsumerSweet consumerSweet=new ConsumerSweet();
+            ConsumerSweet consumerSweet = new ConsumerSweet();
 
             Long fillingId = null;
             Long wrapperId = null;
@@ -108,7 +108,7 @@ public class PackageWithCustomSweetsUI extends ConsoleUI implements PackageCreat
 
 
             boolean needWrapper = true;
-            if (fillingId!=null && fillingId>0) {
+            if (fillingId != null && fillingId > 0) {
                 System.out.println("Do you want to choose wrapper for your sweet");
                 needWrapper = yesOrNo(decision);
 
@@ -141,8 +141,8 @@ public class PackageWithCustomSweetsUI extends ConsoleUI implements PackageCreat
                 }
             }
 
-           consumerSweet.setName("customer_sweet_" + new Date(System.currentTimeMillis()));
-           consumerSweet.setType(type.toString());
+            consumerSweet.setName("customer_sweet_" + new Date(System.currentTimeMillis()));
+            consumerSweet.setType(type.toString());
 
             consumerSweetService.save(consumerSweet);
 

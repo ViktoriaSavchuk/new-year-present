@@ -1,8 +1,8 @@
 package com.newyear.present.ui.impl;
 
 import com.newyear.present.entity.ReadyPackage;
-import com.newyear.present.entity.sweets.Sweets;
-import com.newyear.present.services.*;
+import com.newyear.present.services.PackageService;
+import com.newyear.present.services.SweetsPackagesService;
 import com.newyear.present.ui.ConsoleUI;
 import com.newyear.present.ui.PackageCreator;
 import lombok.extern.log4j.Log4j2;

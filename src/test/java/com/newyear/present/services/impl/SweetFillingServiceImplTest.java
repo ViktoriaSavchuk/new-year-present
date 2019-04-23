@@ -20,9 +20,9 @@ import static org.mockito.Mockito.when;
 public class SweetFillingServiceImplTest {
 
     @Mock
-    SweetFillingsRepo sweetFillingsRepo;
+    private SweetFillingsRepo sweetFillingsRepo;
     @InjectMocks
-    SweetFillingServiceImpl sweetFillingService;
+    private SweetFillingServiceImpl sweetFillingService;
 
     private List<SweetFilling> sweetFillings1=new ArrayList<>();
 

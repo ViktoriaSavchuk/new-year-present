@@ -9,10 +9,9 @@ import com.newyear.present.entity.sweets.SellerSweet;
 import com.newyear.present.entity.sweets.Sweets;
 import com.newyear.present.repository.ReadyPackageRepo;
 import com.newyear.present.repository.SweetsPackagesRepo;
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -30,23 +29,20 @@ import static org.mockito.Mockito.*;
 public class PackageServiceImplTest {
 
     @Mock
-    ReadyPackageRepo packageRepo;
-
-    PackageServiceImpl packageService;
+    private ReadyPackageRepo packageRepo;
 
     @Mock
-    SweetsPackagesRepo sweetsPackagesRepo;
+    private SweetsPackagesRepo sweetsPackagesRepo;
+
+    @InjectMocks
+    private PackageServiceImpl packageService;
 
 
-    @Mock
-    private SweetsPackagesServiceImpl sweetsPackagesService;
-
-
-    @Before
+   /* @Before
     public void before() {
-        packageService = Mockito.spy(new PackageServiceImpl(packageRepo, sweetsPackagesService));
+        packageService = Mockito.spy(new PackageServiceImpl(packageRepo, sweetsPackagesRepo));
     }
-
+*/
 
     private List<ReadyPackage> readyPackages = new ArrayList<>();
     private ReadyPackage readyPackage1;
@@ -54,10 +50,13 @@ public class PackageServiceImplTest {
     private ReadyPackage readyPackage3;
     private ReadyPackage readyPackage4;
 
-    private List<Sweets> expectedSortedList = new ArrayList<>();
+
+    private List<SweetsPackages> sweetsPackages = new ArrayList<>();
 
     private List<Sweets> sweets = new ArrayList<>();
-    private List<SweetsPackages> sweetsPackages = new ArrayList<>();
+    private List<Sweets> expectedSortedList = new ArrayList<>();
+
+    private List<Sweets> expectedSweetFromPackageWithSugarDiapasonFrom0To3g =new ArrayList<>();
 
     {
 
@@ -82,13 +81,13 @@ public class PackageServiceImplTest {
 
         readyPackage2 = ReadyPackage.builder()
                 .id(2L)
-                .date(date1)
+                .date(date2)
                 .createdBy("seller")
                 .build();
 
         readyPackage3 = ReadyPackage.builder()
                 .id(3L)
-                .date(date1)
+                .date(date3)
                 .createdBy("consumer")
                 .build();
 
@@ -118,7 +117,7 @@ public class PackageServiceImplTest {
 
         SweetWrapper sweetWrapper1 = new SweetWrapper(1L, "white_choco", "chocolate", 590L);
         SweetWrapper sweetWrapper2 = new SweetWrapper(2L, "caramel", "caramel", 960L);
-        SweetWrapper sweetWrapper3 = new SweetWrapper(3L, "jelly", "jelly", 8000L);
+        SweetWrapper sweetWrapper3 = new SweetWrapper(3L, "jelly", "jelly", 800L);
 
         sweetWrappers.add(sweetWrapper1);
         sweetWrappers.add(sweetWrapper2);
@@ -127,11 +126,11 @@ public class PackageServiceImplTest {
         List<SellerSweet> sellerSweets = new ArrayList<>();
 
         SellerSweet sellerSweet1 = new SellerSweet(1L, "romashka",
-                "chocolate", 10000L, 1500L, sweetFilling2, sweetWrapper1);
+                "chocolate", 10000L, 1500L, sweetFilling2, sweetWrapper1);//1003,5+5900=6903.5
         SellerSweet sellerSweet2 = new SellerSweet(2L, "barbaris",
-                "caramel", 8000L, null, null, sweetWrapper2);
+                "caramel", 8000L, null, null, sweetWrapper2);//7680
         SellerSweet sellerSweet3 = new SellerSweet(3L, "bdzilka",
-                "jelly", 3000L, 5500L, sweetFilling5, sweetWrapper3);
+                "jelly", 3000L, 5500L, sweetFilling5, sweetWrapper3);//5115+2400=7515
 
 
         sellerSweets.add(sellerSweet1);
@@ -139,11 +138,11 @@ public class PackageServiceImplTest {
 
         List<ConsumerSweet> consumerSweets = new ArrayList<>();
         ConsumerSweet consumerSweet1 = new ConsumerSweet(1L, "customer_sweet_2019-04-19",
-                "chocolate_jelly", 1400L, 2500L, sweetFilling1, sweetWrapper3);
+                "chocolate_jelly", 1400L, 2500L, sweetFilling1, sweetWrapper3); //1622.5+1,120=2742.5
         ConsumerSweet consumerSweet2 = new ConsumerSweet(2L, "customer_sweet_2019-04-19",
                 "caramel_jelly", 1800L, 2000L, sweetFilling5, sweetWrapper3);
         ConsumerSweet consumerSweet3 = new ConsumerSweet(3L, "customer_sweet_2019-04-19",
-                "chocolate_chocolate", 1700L, 2300L, sweetFilling3, sweetWrapper1);
+                "chocolate_chocolate", 1700L, 2300L, sweetFilling3, sweetWrapper1);//1504,2+1003=2507.2
         ConsumerSweet consumerSweet4 = new ConsumerSweet(-1, null,
                 null, null, null, null, null);
 
@@ -176,12 +175,14 @@ public class PackageServiceImplTest {
         sweetsPackages.add(sweetsPackages5);
         sweetsPackages.add(sweetsPackages6);
 
-        sweets.add(sellerSweet1);
         sweets.add(sellerSweet2);
+        sweets.add(sellerSweet1);
 
-        expectedSortedList.add(sellerSweet2);
         expectedSortedList.add(sellerSweet1);
+        expectedSortedList.add(sellerSweet2);
 
+        expectedSweetFromPackageWithSugarDiapasonFrom0To3g.add(consumerSweet1);
+        expectedSweetFromPackageWithSugarDiapasonFrom0To3g.add(consumerSweet3);
 
     }
 
@@ -239,22 +240,29 @@ public class PackageServiceImplTest {
         verify(packageRepo).getOne(anyLong());
     }
 
+
     @Test
     public void getWeight() {
-        when(packageRepo.findById(1L)).thenReturn(Optional.of(readyPackage1));
-//        when(packageRepo.getOne(1L).getWeight()).thenReturn(readyPackage1.getWeight());
+        when(packageRepo.findById(1L)).thenReturn(Optional.ofNullable(readyPackage1));
         Long expected = 10500L;
         Long actual = packageService.getWeight(1L);
         assertEquals(expected, actual);
     }
 
-    @Ignore
     @Test
     public void sortPackageBySweetsWeight() {
+
         when(sweetsPackagesRepo.findAll()).thenReturn(sweetsPackages);
-        when(packageService.allSweetsInPackage(1L)).thenReturn(sweets);
-        when(packageRepo.getOne(1L)).thenReturn(readyPackage1);
         List<Sweets> actualSweets = packageService.sortPackageBySweetsWeight(1L);
         assertEquals(expectedSortedList, actualSweets);
+    }
+
+    @Test
+    public void shouldFindSweetsBySugarDiapason() {
+
+        when(sweetsPackagesRepo.findAll()).thenReturn(sweetsPackages);
+        List<Sweets> actualSweets=packageService.findSweetsBySugarDiapason(0L,3000L,2L);
+        assertEquals(expectedSweetFromPackageWithSugarDiapasonFrom0To3g,actualSweets);
+
     }
 }

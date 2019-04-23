@@ -17,13 +17,11 @@ public class ConsoleApplication implements CommandLineRunner {
     ConsoleUI consoleUI;
 
     public static void main(String[] args) {
-
         SpringApplication.run(ConsoleApplication.class, args);
     }
 
     @Override
     public void run(String... args) throws Exception {
-
         consoleUI.run();
     }
 }

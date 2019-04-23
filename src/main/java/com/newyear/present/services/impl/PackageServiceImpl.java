@@ -4,14 +4,14 @@ import com.newyear.present.entity.ReadyPackage;
 import com.newyear.present.entity.SweetsPackages;
 import com.newyear.present.entity.sweets.Sweets;
 import com.newyear.present.repository.ReadyPackageRepo;
+import com.newyear.present.repository.SweetsPackagesRepo;
 import com.newyear.present.services.PackageService;
-import com.newyear.present.services.SweetsPackagesService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -19,8 +19,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PackageServiceImpl implements PackageService {
 
+    @Autowired
     private final ReadyPackageRepo readyPackageRepo;
-    private final SweetsPackagesService sweetsPackagesService;
+
+    @Autowired
+    private final SweetsPackagesRepo sweetsPackagesRepo;
 
     @Override
     public List<ReadyPackage> findAll() {
@@ -39,7 +42,7 @@ public class PackageServiceImpl implements PackageService {
 
     @Override
     public void updateWeight(Long id) {
-        long weight = sweetsPackagesService
+        long weight = sweetsPackagesRepo
                 .findAll()
                 .stream()
                 .filter(sweet -> sweet.getReadyPackageByPackageId().getId() == id).
@@ -88,16 +91,11 @@ public class PackageServiceImpl implements PackageService {
 
         List<Sweets> sweets = allSweetsInPackage(id);
 
-        sweets.sort(new Comparator<Sweets>() {
-            @Override
-            public int compare(Sweets o1, Sweets o2) {
-                return (int) (((o2.getFillingWeight() != null ? o2.getFillingWeight() : 0)
-
+        sweets.sort((o1, o2) -> (int) ((
+                (o2.getFillingWeight() != null ? o2.getFillingWeight() : 0)
                         + ((o2.getWrapperWeight()) != null ? o2.getWrapperWeight() : 0))
-
-                        - ((o1.getWrapperWeight() != null ? o1.getWrapperWeight() : 0) + (o1.getFillingWeight() != null ? o1.getFillingWeight() : 0)));
-            }
-        });
+                - ((o1.getWrapperWeight() != null ? o1.getWrapperWeight() : 0)
+                + (o1.getFillingWeight() != null ? o1.getFillingWeight() : 0))));
 
         return sweets;
     }
@@ -129,7 +127,7 @@ public class PackageServiceImpl implements PackageService {
     public List<Sweets> allSweetsInPackage(Long id) {
         List<Sweets> sweets = new ArrayList<>();
 
-        for (SweetsPackages swp : sweetsPackagesService.findAll()) {
+        for (SweetsPackages swp : sweetsPackagesRepo.findAll()) {
 
             long id1 = swp.getReadyPackageByPackageId().getId();
             if (id1 == id) {

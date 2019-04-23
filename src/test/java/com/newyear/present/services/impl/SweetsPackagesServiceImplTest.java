@@ -29,9 +29,9 @@ import static org.mockito.Mockito.when;
 public class SweetsPackagesServiceImplTest {
 
     @Mock
-    SweetsPackagesRepo sweetsPackagesRepo;
+    private SweetsPackagesRepo sweetsPackagesRepo;
     @InjectMocks
-    SweetsPackagesServiceImpl sweetsPackagesService;
+    private SweetsPackagesServiceImpl sweetsPackagesService;
 
     private List<SweetsPackages> sweetsPackages = new ArrayList<>();
 

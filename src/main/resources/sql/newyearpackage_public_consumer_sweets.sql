@@ -1,0 +1,7 @@
+INSERT INTO public.consumer_sweets (id, name, type, wrapper_weight, filling_id, filling_weight, wrapper_id) VALUES (11, 'customer_sweet_2019-04-19', 'chocolate_jelly', null, null, null, null);
+INSERT INTO public.consumer_sweets (id, name, type, wrapper_weight, filling_id, filling_weight, wrapper_id) VALUES (12, 'customer_sweet_2019-04-19', 'chocolate', 50000, 5, 10000, 3);
+INSERT INTO public.consumer_sweets (id, name, type, wrapper_weight, filling_id, filling_weight, wrapper_id) VALUES (13, 'customer_sweet_2019-04-19', 'chocolate', 10000, null, null, 3);
+INSERT INTO public.consumer_sweets (id, name, type, wrapper_weight, filling_id, filling_weight, wrapper_id) VALUES (14, 'customer_sweet_2019-04-19', 'jelly', null, 9, 13456, null);
+INSERT INTO public.consumer_sweets (id, name, type, wrapper_weight, filling_id, filling_weight, wrapper_id) VALUES (15, 'customer_sweet_2019-04-20', 'jelly_caramel', 4000, 8, 2000, 5);
+INSERT INTO public.consumer_sweets (id, name, type, wrapper_weight, filling_id, filling_weight, wrapper_id) VALUES (16, 'customer_sweet_2019-04-20', 'chocolate_chocolate', 6000, 2, 2000, 3);
+INSERT INTO public.consumer_sweets (id, name, type, wrapper_weight, filling_id, filling_weight, wrapper_id) VALUES (17, 'customer_sweet_2019-04-22', 'chocolate_', null, 2, 300, null);

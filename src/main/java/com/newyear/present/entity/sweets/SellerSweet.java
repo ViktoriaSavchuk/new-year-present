@@ -13,10 +13,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "seller_sweets", schema = "public", catalog = "newyearpackage")
 public class SellerSweet extends Sweets {
-/*
-
-    @OneToMany(mappedBy = "sellerSweetsBySellerSweetId")
-    private Collection<SweetsPackages> sweetsPackagesById;*/
 
     @Builder
     public SellerSweet(long id, String name, String type, Long wrapperWeight, Long fillingWeight,

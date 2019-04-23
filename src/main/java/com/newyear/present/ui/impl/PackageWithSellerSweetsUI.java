@@ -47,7 +47,7 @@ public class PackageWithSellerSweetsUI extends ConsoleUI implements PackageCreat
         do try {
             sweetId = scanner.nextLong();
 
-            if(sellerSweetService.getOne(sweetId).getWrapperWeight() == null)
+            if (sellerSweetService.getOne(sweetId).getWrapperWeight() == null)
                 throw new Exception();
             sweetsPackagesService.save(
                     SweetsPackages.builder()
@@ -58,7 +58,7 @@ public class PackageWithSellerSweetsUI extends ConsoleUI implements PackageCreat
         } catch (Exception e) {
             break;
 
-        } while (sweetId>0);
+        } while (sweetId > 0);
 
         packageService.updateWeight(readyPackage.getId());
         packageService.save(readyPackage);

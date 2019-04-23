@@ -1,11 +1,8 @@
 package com.newyear.present.entity;
 
-import com.newyear.present.entity.sweets.ConsumerSweet;
-import com.newyear.present.entity.sweets.SellerSweet;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 
 @Builder
@@ -32,12 +29,6 @@ public class SweetFilling {
     @Basic
     @Column(name = "sugar_in_1000_mg", nullable = true)
     private Long sugarIn1000Mg;
-  /*  @OneToMany(mappedBy = "sweetFillingByFillingId")
-    private Collection<ConsumerSweet> consumerSweetsById;
-
-    @OneToMany(mappedBy = "sweetFillingByFillingId")
-    private Collection<SellerSweet> sellerSweetsById;*/
-
 
     @Override
     public String toString() {

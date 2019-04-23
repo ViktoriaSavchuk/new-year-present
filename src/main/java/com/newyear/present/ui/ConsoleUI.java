@@ -32,26 +32,17 @@ public class ConsoleUI {
 
     protected Scanner scanner = new Scanner(System.in);
 
-    Long packageId = null;
 
     public void run() {
 
+        Long packageId = null;
         StringBuilder decision = new StringBuilder();
 
         if (!greeting(decision)) System.exit(0);
 
         packageId = createPackage(decision);
-        if (packageId != null) {
-            System.out.println("your package");
-            packageService.showById(packageId);
-            List<Sweets> sweets = packageService.sortPackageBySweetsWeight(packageId);
 
-            System.out.println(sweets.toString());
-            if(packageService.findSweetsBySugarDiapason(0L, 10000L, packageId)!=null){
-                System.out.println("Sweets in which the amount of sugar is within the specified limits");
-                System.out.println(packageService.findSweetsBySugarDiapason(0L, 10000L, packageId));
-            }
-        }
+        showSummaryInfo(packageId);
         System.exit(0);
     }
 
@@ -85,6 +76,27 @@ public class ConsoleUI {
         return null;
     }
 
+    public void showSummaryInfo(Long packageId) {
+
+        if (packageId != null) {
+            System.out.println("your package");
+            packageService.showById(packageId);
+
+            System.out.println("sorted sweets by its weight");
+            List<Sweets> sweets = packageService.sortPackageBySweetsWeight(packageId);
+            System.out.println(sweets.toString()
+                    .replace("[", "")
+                    .replace("]", ""));
+
+            if (packageService.findSweetsBySugarDiapason(0L, 10000L, packageId) != null) {
+                System.out.println("\nSweets in which the amount of sugar is within the specified limits");
+                System.out.println(packageService.findSweetsBySugarDiapason(0L, 10000L, packageId)
+                        .toString().replace("[", "")
+                        .replace("]", ""));
+            }
+        }
+
+    }
 
     public void getChosenPackage(ReadyPackage readyPackage) {
         System.out.println("Your package");

@@ -39,9 +39,9 @@ public class SweetsPackages {
             return sellerSweetsBySellerSweetId +
                     "\n" + consumerSweetsByConsumerSweetId;
         } else if (sellerSweetsBySellerSweetId != null) {
-            return sellerSweetsBySellerSweetId+"";
+            return sellerSweetsBySellerSweetId + "";
         } else if (consumerSweetsByConsumerSweetId != null) {
-            return consumerSweetsByConsumerSweetId+"";
+            return consumerSweetsByConsumerSweetId + "";
         }
         return "no sweets";
     }
